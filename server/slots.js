@@ -3,26 +3,33 @@ const router = Express.Router();
 var { getUser, createUser } = require("./data.js");
 
 let slots = [];
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
-router.get("/:id", (req, res) => {
+router.get("/verify/:id", (req, res) => {
   //   const UserId = req.params.id;
   getUser(req.params.id).then((response) => {
-    console.log(req.params.id, response)
-    res.send(response);
+    if (response == null) {
+      res.send(false);
+    } else {
+      res.send(true);
+    }
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/add/", (req, res) => {
   const new_class = {
-    id: slots.length + 1,
-    class_name: req.body.class_name,
-    capacity: parseInt(req.body.capacity),
-    enrolled: [],
-    waitinglist: [],
+    ...req.body,
   };
-
-  slots.push(new_class);
-  res.send(slots);
+  createUser(new_class).then((response) => {
+    res.send(response);
+  });
 });
 
 router.put("/:class_name", (req, res) => {

@@ -10,7 +10,7 @@ import { mapGetters } from "vuex";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import "@/firebase/index.js";
 import { ref, set, getDatabase } from "firebase/database";
-
+import { findUser, addUser } from "@/timetable";
 export default {
   data() {
     return {
@@ -67,22 +67,20 @@ export default {
         });
     },
     check() {
-      fetch("http:localhost:3000/api/slots")
-        .then((response) => {
-          if (response.ok) {
-            return response.json(); // Parse the response data as JSON
-          } else {
-            throw new Error("API request failed");
-          }
-        })
-        .then((data) => {
-          // Process the response data here
-          console.log(data); // Example: Logging the data to the console
-        })
-        .catch((error) => {
-          // Handle any errors here
-          console.error(error); // Example: Logging the error to the console
-        });
+      findUser("aSFZlCl6NePQGVGFPYdDQ7VLcB").then((data) => {
+        if (data === false) {
+          addUser({
+            uid: "aSFZlCl6NePQGVGFPYdDQ7VLcBY",
+            displayName: "Rohitth Bandaru",
+            email: "rohitthbandaru@gmail.com",
+            emailVerified: true,
+            photoURL:
+              "https://lh3.googleusercontent.com/a/AAcHTteGEDDfuxH6atOWcH9eoRa2sRLMiChW9Xg_o3ITAhmiw7A=s96-c",
+          }).then((data) => {
+            console.log(data);
+          });
+        }
+      });
     },
   },
 };
