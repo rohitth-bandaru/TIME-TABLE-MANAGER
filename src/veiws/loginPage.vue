@@ -22,7 +22,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ emaildata: "getData" }),
+    ...mapGetters(["getUserData"]),
   },
   methods: {
     async register() {
@@ -57,7 +57,12 @@ export default {
         .then((status) => {
           if (status === "success") {
             this.$store.dispatch("updateUser", this.anotherVal);
-
+            findUser(this.anotherVal.uid).then((res) => {
+              if (!res) {
+                addUser(this.anotherVal);
+              }
+              console.log(res);
+            });
             this.$router.push("/home");
           }
         })
@@ -82,6 +87,11 @@ export default {
         }
       });
     },
+  },
+  mounted() {
+    if (this.getUserData.uid != undefined) {
+      this.$router.push("/home");
+    }
   },
 };
 </script>

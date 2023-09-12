@@ -1,7 +1,14 @@
 import { createStore } from "vuex";
+import VuexPersist from "vuex-persist";
 const initialState = {
   user: {},
 };
+
+const vuexPersist = new VuexPersist({
+  key: "user", // unique key for saving state properties in the browser storage
+  storage: window.localStorage, // select the type of storage used (eg - localStorage, sessionStorage, etc)
+  reducer: (state) => ({ ...state }), // select the state properties that you want persisted
+});
 
 export default createStore({
   state: {
@@ -37,4 +44,5 @@ export default createStore({
       return state.user;
     },
   },
+  plugins: [vuexPersist.plugin],
 });

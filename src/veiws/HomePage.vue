@@ -10,6 +10,16 @@ export default {
   computed: {
     ...mapGetters(["getUserData"]),
   },
-  methods: {},
+  methods: {
+    verifyUser() {
+      console.log(this.getUserData.uid);
+      if (this.getUserData.uid === undefined) {
+        this.$router.push("/");
+      }
+    },
+  },
+  mounted() {
+    this.verifyUser();
+  },
 };
 </script>
