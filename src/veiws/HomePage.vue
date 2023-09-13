@@ -1,9 +1,22 @@
 <template>
-  <div>{{ getUserData }}</div>
+  <br />
+  <button @click="logout ">logout</button>
+  <div
+    class="container max-w-full max-h-full grid grid-cols-2 justify-items-center"
+  >
+    <CardComponent
+      label="Schedule meet"
+      @selected="onSelectingScheduleMeet"
+    ></CardComponent>
+    <CardComponent label="My schedule"></CardComponent>
+    <CardComponent label="Friend requests"></CardComponent>
+    <CardComponent label="Manage Friends"></CardComponent>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import CardComponent from "@/components/cardComponent.vue";
 
 export default {
   data() {},
@@ -11,15 +24,24 @@ export default {
     ...mapGetters(["getUserData"]),
   },
   methods: {
+    logout() {
+      localStorage.clear();
+    },
     verifyUser() {
       console.log(this.getUserData.uid);
       if (this.getUserData.uid === undefined) {
         this.$router.push("/");
       }
     },
+    onSelectingScheduleMeet() {
+      console.log("selected schedule meet");
+    },
   },
   mounted() {
     this.verifyUser();
+  },
+  components: {
+    CardComponent,
   },
 };
 </script>

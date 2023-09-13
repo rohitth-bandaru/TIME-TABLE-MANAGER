@@ -1,8 +1,13 @@
-<template class="border">
-  <button @click="register" class="btn btn-primary">submit</button>
-  <button @click="check">check</button>
-  <div>{{ ERROR }}</div>
-  <br />
+<template>
+  <div class="">
+    <div class="font-serif">
+      for now we are using google to authenticate we will get back to you once
+      we add other methods
+    </div>
+    <button @click="register" class="btn btn-primary">submit</button>
+    <div>{{ ERROR }}</div>
+    <br />
+  </div>
 </template>
 
 <script>
@@ -93,5 +98,6 @@ export default {
       this.$router.push("/home");
     }
   },
+  components: {},
 };
 </script>
