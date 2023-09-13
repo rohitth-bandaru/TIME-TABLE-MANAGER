@@ -1,6 +1,6 @@
 const Express = require("express");
 const router = Express.Router();
-var { getUser, createUser } = require("./data.js");
+var { getUser, createUser, verifyEmail } = require("./data.js");
 
 let slots = [];
 router.use(function (req, res, next) {
@@ -23,6 +23,18 @@ router.get("/verify/:id", (req, res) => {
   });
 });
 
+router.get("/verifyUser/:email", (req, res) => {
+  const email = req.params.email;
+  verifyEmail(email)
+    .then((response) => {
+      if (response == null) {
+        res.send(false);
+      } else {
+        res.send(true);
+      }
+    })
+    .catch((err) => console.log(err));
+});
 router.post("/add/", (req, res) => {
   const new_class = {
     ...req.body,

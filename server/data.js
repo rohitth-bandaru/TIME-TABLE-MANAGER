@@ -7,9 +7,8 @@ async function getUser(id) {
 }
 
 async function createUser(userData) {
-  console.log("create user triggered");
   const course = new User({
-    ...userData
+    ...userData,
   });
   const friendlist = new Friends({
     user: userData.uid,
@@ -26,5 +25,11 @@ async function createUser(userData) {
   return result;
 }
 
+async function verifyEmail(email) {
+  const result = await User.findOne({ email: email });
+  return result;
+}
+
 exports.getUser = getUser;
 exports.createUser = createUser;
+exports.verifyEmail = verifyEmail;

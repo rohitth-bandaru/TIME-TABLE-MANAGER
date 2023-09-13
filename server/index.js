@@ -11,7 +11,6 @@ const app = express();
 const http = require("http");
 const port = 3000;
 const host = "localhost";
-const router = express.Router();
 
 app.use(express.json());
 app.use("/api", slots);

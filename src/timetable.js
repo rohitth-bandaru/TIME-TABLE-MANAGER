@@ -18,4 +18,16 @@ async function addUser(data) {
     .then((response) => response.json())
     .then((json) => console.log(json));
 }
-export { findUser, addUser };
+
+async function verifyEmail(data) {
+  const response = await fetch("http://localhost:3000/api/verifyUser/" + data, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((response) => response.json())
+    .catch((err) => console.log(err));
+  return response;
+}
+export { findUser, addUser, verifyEmail };
