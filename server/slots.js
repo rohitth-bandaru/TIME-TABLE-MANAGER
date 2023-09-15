@@ -1,10 +1,11 @@
 const Express = require("express");
 const router = Express.Router();
-var { getUser, createUser, verifyEmail } = require("./data.js");
+var { getUser, createUser, verifyEmail, createRequest } = require("./data.js");
 
 let slots = [];
 router.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
@@ -35,6 +36,13 @@ router.get("/verifyUser/:email", (req, res) => {
     })
     .catch((err) => console.log(err));
 });
+
+router.put("/sendRequest/", (req, res) => {
+  createRequest(req.body).then((response) => {
+    res.send(response);
+  });
+});
+
 router.post("/add/", (req, res) => {
   const new_class = {
     ...req.body,

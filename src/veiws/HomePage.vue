@@ -15,6 +15,7 @@
     ></CardComponent>
     <CardComponent label="Manage Friends"></CardComponent>
   </div>
+  <div>{{ getUserData }}</div>
 </template>
 
 <script>
@@ -27,8 +28,10 @@ export default {
     ...mapGetters(["getUserData"]),
   },
   methods: {
-    logout() {
+    async logout() {
       localStorage.clear();
+      this.$store.dispatch("clearUser");
+      this.$router.push({ name: "loginpage" });
     },
     verifyUser() {
       console.log(this.getUserData.uid);

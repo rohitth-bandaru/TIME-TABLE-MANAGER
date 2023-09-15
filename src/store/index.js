@@ -32,6 +32,10 @@ export default createStore({
     updateUser(context, payload) {
       context.commit("UPDATE_USER_DETAILS", payload);
     },
+    clearUser(context) {
+      context.commit("UPDATE_USER_DETAILS", {});
+      context.commit("UPDATE_EMAIL_DATA", null);
+    },
   },
   getters: {
     getData: (state) => {

@@ -1,28 +1,25 @@
 <template>
+  <div>
     <div>
-        <div>
-            {{ user }}
-        </div>
-        <button>
-            accept
-        </button>
-        <button>
-            reject
-        </button>
+      {{ user }}
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      user: String,
-      
+    <button>accept</button>
+    <button>reject</button>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    user: String,
+  },
+  methods: {
+    accepted() {
+      this.$emit("");
     },
-    methods: {
-      handleClick() {
-        this.$emit("selected");
-      },
+    rejected() {
+      this.$emit("");
     },
-  };
-  </script>
-  
+  },
+};
+</script>

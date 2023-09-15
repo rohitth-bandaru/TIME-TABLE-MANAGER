@@ -1,5 +1,6 @@
 const User = require("./schema/user_schema");
 const Friends = require("./schema/friends_schema");
+const Schedule = require("./schema/schedule_schema");
 
 async function getUser(id) {
   const friends = await Friends.findOne({ user: id });
@@ -12,17 +13,21 @@ async function createUser(userData) {
   });
   const friendlist = new Friends({
     user: userData.uid,
-    friends: [
-      {
-        user: "",
-        FriendshipStatus: true,
-      },
-    ],
+    friends: [],
+    requests: [],
   });
-  const result = await course.save();
+  const schedule = new Schedule({
+    user: userData.uid,
+    schedule: {},
+  });
+  const result1 = await course.save();
   const result2 = await friendlist.save();
-  console.log(result, result2);
-  return result;
+  const result3 = await schedule.save();
+  return {
+    course_result: result1,
+    friends_result: result2,
+    schedule_result: result3,
+  };
 }
 
 async function verifyEmail(email) {
@@ -30,6 +35,45 @@ async function verifyEmail(email) {
   return result;
 }
 
+async function createRequest(data) {
+  const sender = await User.findOne({ email: data.sender });
+  const receiver = await User.findOne({ email: data.receiver });
+  const friendsobj = {
+    user: data.sender,
+    status: "sent",
+  };
+  const requestObj = {
+    user: data.receiver,
+    status: "received",
+  };
+  const result = await Friends.findOne({ user: sender.uid });
+  const result1 = await Friends.findOne({ user: receiver.uid });
+  console.log(result1);
+  let check1 = false;
+
+  for (one of result.friends) {
+    if (one.user == friendsobj.user) {
+      check1 = true;
+    }
+  }
+  if (!check1) {
+    result.friends.push(friendsobj);
+    result.save();
+  }
+
+  let check2 = false;
+  for (one of result1.friends) {
+    if (one.user == requestObj.user) {
+      check2 = true;
+    }
+  }
+  if (!check2) {
+    result1.friends.push(requestObj);
+    result1.save();
+  }
+  return result1;
+}
 exports.getUser = getUser;
 exports.createUser = createUser;
 exports.verifyEmail = verifyEmail;
+exports.createRequest = createRequest;
