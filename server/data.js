@@ -7,6 +7,16 @@ async function getUser(id) {
   return friends;
 }
 
+async function getUserData(id) {
+  const userinfo = await User.findOne({ uid: id });
+  const friendsinfo = await Friends.findOne({ user: id });
+  const scheduleinfo = await Schedule.findOne({ user: id });
+  return {
+    userinfo: userinfo,
+    friendsinfo: friendsinfo,
+    scheduleinfo: scheduleinfo,
+  };
+}
 async function createUser(userData) {
   const course = new User({
     ...userData,
@@ -56,7 +66,7 @@ async function createRequest(data) {
       check1 = true;
     }
   }
-  if (!check1) {
+  if (check1) {
     result.friends.push(friendsobj);
     result.save();
   }
@@ -67,7 +77,7 @@ async function createRequest(data) {
       check2 = true;
     }
   }
-  if (!check2) {
+  if (check2) {
     result1.friends.push(requestObj);
     result1.save();
   }
@@ -77,3 +87,4 @@ exports.getUser = getUser;
 exports.createUser = createUser;
 exports.verifyEmail = verifyEmail;
 exports.createRequest = createRequest;
+exports.getUserData = getUserData;

@@ -1,6 +1,12 @@
 const Express = require("express");
 const router = Express.Router();
-var { getUser, createUser, verifyEmail, createRequest } = require("./data.js");
+var {
+  getUser,
+  createUser,
+  verifyEmail,
+  createRequest,
+  getUserData,
+} = require("./data.js");
 
 let slots = [];
 router.use(function (req, res, next) {
@@ -21,6 +27,14 @@ router.get("/verify/:id", (req, res) => {
     } else {
       res.send(true);
     }
+  });
+});
+
+router.get("/User/:id", (req, res) => {
+  //   const UserId = req.params.id;
+  getUserData(req.params.id).then((response) => {
+    console.log(response);
+    res.send(response);
   });
 });
 

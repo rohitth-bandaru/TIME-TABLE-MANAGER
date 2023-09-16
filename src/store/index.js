@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import VuexPersist from "vuex-persist";
 const initialState = {
   user: {},
+  friends: {},
 };
 
 const vuexPersist = new VuexPersist({
@@ -15,26 +16,24 @@ export default createStore({
     ...initialState,
   },
   mutations: {
-    UPDATE_EMAIL_DATA(state, payload) {
-      state.EmailData = payload;
-    },
     UPDATE_USER_DETAILS(state, payload) {
       state.user = payload;
     },
+    UPDATE_FRIENDS_DETAILS(state, payload) {
+      state.friends = payload;
+    },
   },
   actions: {
-    addEmailId(context, payload) {
-      const data = context.state.EmailData;
-      data.push(payload);
-      console.log(data);
-      context.commit("UPDATE_EMAIL_DATA", data);
-    },
     updateUser(context, payload) {
       context.commit("UPDATE_USER_DETAILS", payload);
     },
+
     clearUser(context) {
       context.commit("UPDATE_USER_DETAILS", {});
-      context.commit("UPDATE_EMAIL_DATA", null);
+    },
+
+    updateFriends(context, payload) {
+      context.commit("UPDATE_FRIENDS_DETAILS", payload);
     },
   },
   getters: {

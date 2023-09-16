@@ -16,14 +16,20 @@
         <span>{{ VerificationMessage }}</span>
       </div>
     </div>
-    <FRComponent user="hello"></FRComponent>
+    <div v-for="request in requestsData" :key="request._id">
+      <FRComponent
+        :user="request.user"
+        v-if="request.status === `sent`"
+      ></FRComponent>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import { sendRequest, verifyEmail } from "@/timetable.js";
+import { sendRequest, verifyEmail, getAllData } from "@/timetable.js";
 import FRComponent from "@/components/FriendRequestComponent.vue";
+
 export default {
   data() {
     return {
@@ -31,6 +37,7 @@ export default {
       error: null,
       VerificationMessage: "initial",
       emailVerified: false,
+      requestsData: [],
     };
   },
   computed: {
@@ -58,6 +65,13 @@ export default {
   },
   components: {
     FRComponent,
+  },
+  mounted() {
+    getAllData(this.getUserData.uid).then((response) => {
+      this.$store.dispatch("updateFriends", response.friendsinfo);
+      this.requestsData = response.friendsinfo.friends;
+      console.log(response);
+    });
   },
 };
 </script>
