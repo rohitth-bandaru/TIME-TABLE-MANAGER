@@ -77,7 +77,10 @@ export default {
       });
     },
     reject(payload) {
-      console.log(payload);
+      rejectUser({
+        sender: payload,
+        receiver: this.getUserData.email,
+      });
     },
   },
   components: {

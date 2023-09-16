@@ -113,12 +113,12 @@ async function rejectUser(data) {
   const result1 = await Friends.findOne({ user: receiver.uid });
 
   for (one of result.friends) {
-    if (one.user == data.sender) {
+    if (one.user == data.receiver) {
       one.status = "rejected";
     }
   }
   for (one of result1.friends) {
-    if (one.user == data.receiver) {
+    if (one.user == data.sender) {
       one.status = "rejected";
     }
   }
