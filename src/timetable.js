@@ -70,7 +70,7 @@ async function acceptUser(data) {
   return response;
 }
 async function rejectUser(data) {
-  const response = await fetch("http://localhost:3000/api/accept/", {
+  const response = await fetch("http://localhost:3000/api/reject/", {
     method: "PUT",
     body: JSON.stringify({
       ...data,

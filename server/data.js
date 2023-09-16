@@ -49,11 +49,11 @@ async function verifyEmail(email) {
 async function createRequest(data) {
   const sender = await User.findOne({ email: data.sender });
   const receiver = await User.findOne({ email: data.receiver });
-  const friendsobj = {
+  const senderObj = {
     user: data.sender,
     status: "sent",
   };
-  const requestObj = {
+  const receiverObj = {
     user: data.receiver,
     status: "received",
   };
@@ -63,23 +63,23 @@ async function createRequest(data) {
   let check1 = false;
 
   for (one of result.friends) {
-    if (one.user == friendsobj.user) {
+    if (one.user == receiverObj.user) {
       check1 = true;
     }
   }
   if (!check1) {
-    result.friends.push(friendsobj);
+    result.friends.push(receiverObj);
     result.save();
   }
 
   let check2 = false;
   for (one of result1.friends) {
-    if (one.user == requestObj.user) {
+    if (one.user == senderObj.user) {
       check2 = true;
     }
   }
   if (!check2) {
-    result1.friends.push(requestObj);
+    result1.friends.push(senderObj);
     result1.save();
   }
   return result1;
@@ -92,12 +92,12 @@ async function acceptUser(data) {
   const result1 = await Friends.findOne({ user: receiver.uid });
 
   for (one of result.friends) {
-    if (one.user == data.sender) {
+    if (one.user == data.receiver) {
       one.status = "friends";
     }
   }
   for (one of result1.friends) {
-    if (one.user == data.receiver) {
+    if (one.user == data.sender) {
       one.status = "friends";
     }
   }

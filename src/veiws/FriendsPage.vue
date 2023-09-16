@@ -20,6 +20,8 @@
       <FRComponent
         :user="request.user"
         v-if="request.status === `sent`"
+        @accept="accept"
+        @reject="reject"
       ></FRComponent>
     </div>
   </div>
@@ -27,7 +29,13 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { sendRequest, verifyEmail, getAllData } from "@/timetable.js";
+import {
+  sendRequest,
+  verifyEmail,
+  getAllData,
+  acceptUser,
+  rejectUser,
+} from "@/timetable.js";
 import FRComponent from "@/components/FriendRequestComponent.vue";
 
 export default {
@@ -61,6 +69,15 @@ export default {
           this.VerificationMessage = "this email is not verified";
         }
       });
+    },
+    accept(payload) {
+      acceptUser({
+        sender: payload,
+        receiver: this.getUserData.email,
+      });
+    },
+    reject(payload) {
+      console.log(payload);
     },
   },
   components: {

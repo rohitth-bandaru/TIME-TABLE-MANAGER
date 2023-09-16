@@ -3,10 +3,18 @@
     <div class="inline container p-2">
       {{ user }}
     </div>
-    <button class="container w-32 m-1 p-1 rounded-lg bg-green-600">
+    <button
+      class="container w-32 m-1 p-1 rounded-lg bg-green-600"
+      @click="accepted"
+    >
       accept
     </button>
-    <button class="container w-32 m-1 p-1 rounded-lg bg-red-600">reject</button>
+    <button
+      class="container w-32 m-1 p-1 rounded-lg bg-red-600"
+      @click="rejected"
+    >
+      reject
+    </button>
   </div>
 </template>
 
@@ -17,10 +25,10 @@ export default {
   },
   methods: {
     accepted() {
-      this.$emit("");
+      this.$emit("accept", this.user);
     },
     rejected() {
-      this.$emit("");
+      this.$emit("reject", this.user);
     },
   },
 };
