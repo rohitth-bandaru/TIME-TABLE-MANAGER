@@ -33,6 +33,7 @@ async function verifyEmail(data) {
 
 async function sendRequest(data) {
   console.log(data);
+  console.log("called in timetable");
   fetch("http://localhost:3000/api/sendRequest/", {
     method: "PUT",
     body: JSON.stringify({
@@ -53,4 +54,41 @@ async function getAllData(user) {
   console.log(userData);
   return userData;
 }
-export { findUser, addUser, verifyEmail, sendRequest, getAllData };
+
+async function acceptUser(data) {
+  const response = await fetch("http://localhost:3000/api/accept/", {
+    method: "PUT",
+    body: JSON.stringify({
+      ...data,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  }).then((response) => {
+    console.log(response);
+  });
+  return response;
+}
+async function rejectUser(data) {
+  const response = await fetch("http://localhost:3000/api/accept/", {
+    method: "PUT",
+    body: JSON.stringify({
+      ...data,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  }).then((response) => {
+    console.log(response);
+  });
+  return response;
+}
+export {
+  findUser,
+  addUser,
+  verifyEmail,
+  sendRequest,
+  getAllData,
+  acceptUser,
+  rejectUser,
+};

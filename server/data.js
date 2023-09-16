@@ -17,6 +17,7 @@ async function getUserData(id) {
     scheduleinfo: scheduleinfo,
   };
 }
+
 async function createUser(userData) {
   const course = new User({
     ...userData,
@@ -66,7 +67,7 @@ async function createRequest(data) {
       check1 = true;
     }
   }
-  if (check1) {
+  if (!check1) {
     result.friends.push(friendsobj);
     result.save();
   }
@@ -77,14 +78,59 @@ async function createRequest(data) {
       check2 = true;
     }
   }
-  if (check2) {
+  if (!check2) {
     result1.friends.push(requestObj);
     result1.save();
   }
   return result1;
 }
+
+async function acceptUser(data) {
+  const sender = await User.findOne({ email: data.sender });
+  const receiver = await User.findOne({ email: data.receiver });
+  const result = await Friends.findOne({ user: sender.uid });
+  const result1 = await Friends.findOne({ user: receiver.uid });
+
+  for (one of result.friends) {
+    if (one.user == data.sender) {
+      one.status = "friends";
+    }
+  }
+  for (one of result1.friends) {
+    if (one.user == data.receiver) {
+      one.status = "friends";
+    }
+  }
+  result.save();
+  result1.save();
+  return result, result1;
+}
+
+async function rejectUser(data) {
+  const sender = await User.findOne({ email: data.sender });
+  const receiver = await User.findOne({ email: data.receiver });
+  const result = await Friends.findOne({ user: sender.uid });
+  const result1 = await Friends.findOne({ user: receiver.uid });
+
+  for (one of result.friends) {
+    if (one.user == data.sender) {
+      one.status = "rejected";
+    }
+  }
+  for (one of result1.friends) {
+    if (one.user == data.receiver) {
+      one.status = "rejected";
+    }
+  }
+  result.save();
+  result1.save();
+  return result, result1;
+}
+
 exports.getUser = getUser;
 exports.createUser = createUser;
 exports.verifyEmail = verifyEmail;
 exports.createRequest = createRequest;
 exports.getUserData = getUserData;
+exports.acceptUser = acceptUser;
+exports.rejectUser = rejectUser;
