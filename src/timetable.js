@@ -51,7 +51,6 @@ async function getAllData(user) {
   const userData = await fetch("http://localhost:3000/api/User/" + user, {
     method: "GET",
   }).then((response) => response.json());
-  console.log(userData);
   return userData;
 }
 

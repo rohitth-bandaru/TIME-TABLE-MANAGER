@@ -3,6 +3,7 @@ import VuexPersist from "vuex-persist";
 const initialState = {
   user: {},
   friends: {},
+  schedule: {},
 };
 
 const vuexPersist = new VuexPersist({
@@ -22,6 +23,10 @@ export default createStore({
     UPDATE_FRIENDS_DETAILS(state, payload) {
       state.friends = payload;
     },
+    UPDATE_STATE(state, payload) {
+      state = payload;
+      console.log(state);
+    },
   },
   actions: {
     updateUser(context, payload) {
@@ -35,10 +40,13 @@ export default createStore({
     updateFriends(context, payload) {
       context.commit("UPDATE_FRIENDS_DETAILS", payload);
     },
+    updateState(context, payload) {
+      context.commit("UPDATE_STATE", payload);
+    },
   },
   getters: {
     getData: (state) => {
-      return state.EmailData;
+      return JSON.stringify(state.friends);
     },
     getVerified: (state, emailid) => {
       return state.EmailData.includes(emailid);

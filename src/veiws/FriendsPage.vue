@@ -16,14 +16,6 @@
         <span>{{ VerificationMessage }}</span>
       </div>
     </div>
-    <div v-for="request in requestsData" :key="request._id">
-      <FRComponent
-        :user="request.user"
-        v-if="request.status === `sent`"
-        @accept="accept"
-        @reject="reject"
-      ></FRComponent>
-    </div>
   </div>
 </template>
 
@@ -36,7 +28,6 @@ import {
   acceptUser,
   rejectUser,
 } from "@/timetable.js";
-import FRComponent from "@/components/FriendRequestComponent.vue";
 
 export default {
   data() {
@@ -82,9 +73,6 @@ export default {
         receiver: this.getUserData.email,
       });
     },
-  },
-  components: {
-    FRComponent,
   },
   mounted() {
     getAllData(this.getUserData.uid).then((response) => {

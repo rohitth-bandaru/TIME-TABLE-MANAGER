@@ -13,7 +13,10 @@
       label="Friend requests"
       @selected="onSelectingFriendsRequests"
     ></CardComponent>
-    <CardComponent label="Manage Friends"></CardComponent>
+    <CardComponent
+      label="Manage Friends"
+      @selected="onSelectingManageFriends"
+    ></CardComponent>
   </div>
   <div>{{ getUserData }}</div>
 </template>
@@ -23,7 +26,6 @@ import { mapGetters } from "vuex";
 import CardComponent from "@/components/cardComponent.vue";
 
 export default {
-  data() {},
   computed: {
     ...mapGetters(["getUserData"]),
   },
@@ -40,10 +42,13 @@ export default {
       }
     },
     onSelectingScheduleMeet() {
-      console.log("selected schedule meet");
+      this.$router.push({ name: "scheduleMeet" });
     },
     onSelectingFriendsRequests() {
       this.$router.push({ name: "friendspage" });
+    },
+    onSelectingManageFriends() {
+      this.$router.push({ name: "managefriendspage" });
     },
   },
   mounted() {
