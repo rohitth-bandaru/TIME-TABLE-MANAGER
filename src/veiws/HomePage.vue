@@ -8,7 +8,10 @@
       label="Schedule meet"
       @selected="onSelectingScheduleMeet"
     ></CardComponent>
-    <CardComponent label="My schedule"></CardComponent>
+    <CardComponent
+      label="My schedule"
+      @selected="onSelectingMySchedule"
+    ></CardComponent>
     <CardComponent
       label="Friend requests"
       @selected="onSelectingFriendsRequests"
@@ -49,6 +52,9 @@ export default {
     },
     onSelectingManageFriends() {
       this.$router.push({ name: "managefriendspage" });
+    },
+    onSelectingMySchedule() {
+      this.$router.push({ name: "mySchedule" });
     },
   },
   mounted() {

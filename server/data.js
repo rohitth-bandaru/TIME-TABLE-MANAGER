@@ -59,7 +59,6 @@ async function createRequest(data) {
   };
   const result = await Friends.findOne({ user: sender.uid });
   const result1 = await Friends.findOne({ user: receiver.uid });
-  console.log(result1);
   let check1 = false;
 
   for (one of result.friends) {

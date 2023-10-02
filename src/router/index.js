@@ -5,6 +5,7 @@ import AddEvent from "@/veiws/addEvent.vue";
 import FriendsPage from "@/veiws/FriendsPage.vue";
 import ManageFriends from "@/veiws/ManageFriendsPage.vue";
 import scheduleMeet from "@/veiws/addEvent.vue";
+import mySchedule from "@/veiws/mySchedule.vue";
 const routes = [
   {
     path: "/",
@@ -40,6 +41,11 @@ const routes = [
     path: "/scheduleMeet",
     name: "scheduleMeet",
     component: scheduleMeet,
+  },
+  {
+    path: "/muSchedule",
+    name: "mySchedule",
+    component: mySchedule,
   },
 ];
 export default createRouter({

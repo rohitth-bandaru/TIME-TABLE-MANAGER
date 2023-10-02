@@ -54,6 +54,9 @@ export default createStore({
     getUserData: (state) => {
       return state.user;
     },
+    getShedules: (state) => {
+      return state.schedule;
+    },
   },
   plugins: [vuexPersist.plugin],
 });
